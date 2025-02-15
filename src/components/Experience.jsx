@@ -19,7 +19,7 @@ export default function Experience() {
                     </div>
                     {/* Works */}
                     <ul className='list-disc list-outside text-slate-300 pl-3 '>
-                        <li className='mb-2 '>Worked on mutiple railways projects.</li>
+                        <li className='mb-2 '>Worked on multiple railways projects.</li>
                         <li className='mb-2'>Contributed to the development of Full Stack Web and App from scratch.</li>
                         <li>Currently working closely with cross-functional teams in Agile environments, adapting to project challenges and ensuring the timely delivery of high-quality software solutions.</li>
                     </ul>
