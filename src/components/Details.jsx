@@ -23,7 +23,7 @@ export default function Details() {
                         <li className='text-2xl text-slate-400 hover:text-white transition-all duration-200' ><a href="https://github.com/unstoppableayush" target='_blank'><FaGithub /></a></li>
                         <li className='text-2xl text-slate-400 hover:text-white transition-all duration-200' ><a href="https://www.linkedin.com/in/unstoppableayush" target='_blank'><FaLinkedin /></a></li>
                         <li className='text-3xl text-slate-400 hover:text-white transition-all duration-200' ><a href="mailto:ayushkum884@gmail.com" target='_blank'><MdEmail /></a></li>
-                        <li className='text-[26px] text-slate-400 hover:text-white transition-all duration-200' ><a href="https://www.instagram.com/unstoppable_ayush" target='_blank'><FaInstagram /></a></li>
+                        <li className='text-[26px] text-slate-400 hover:text-white transition-all duration-200' ><a href="https://www.instagram.com/unstoppable_ayush.dev" target='_blank'><FaInstagram /></a></li>
                     </ul>
                 </div>
                 <div className=' flex flex-col md:items-start items-center text-3xl gap-5 font-bold'>
