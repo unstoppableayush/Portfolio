@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import { FaGithub } from "react-icons/fa";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import projectData from './projectData';
@@ -15,7 +15,7 @@ export default function Projects() {
     // }, [showMore])
 
     return (
-        <div className='w-full flex flex-col gap-2'>
+        <div className='w-full flex flex-col gap-2  px-1 md:px-0'>
             <h1 className='text-4xl font-bold text-violet-500 mb-3 md:text-start text-center'>Projects</h1>
             {/* Projects */}
             {/* Work Container */}
@@ -43,12 +43,13 @@ export default function Projects() {
                                             }
                                         </ul>
                                         {/* technologies used */}
-                                        <div>{project.technologies.map((tech) => {
-                                            return <span key={tech} className="inline-block bg-blue-500 bg-opacity-30 px-3 py-1.5 text-xs font-medium text-blue-500 mr-2 mb-2 rounded-full">{tech}</span>
-                                        })}</div></div>
 
                                     {/* <img className="rounded-md h-[300px] shadow-sm shadow-white" src={project.poster} alt={project.name} /> */}
                                 </div>
+                                <div>{project.technologies.map((tech) => {
+                                        return <span key={tech} className="inline-block bg-blue-500 bg-opacity-30 px-3 py-1.5 text-xs font-medium text-blue-500 mr-2 mb-2 rounded-full">{tech}</span>
+                                    })}
+                                </div></div>
 
 
                             </div>

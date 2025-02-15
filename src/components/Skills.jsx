@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function Skills() {
     const languages = ["JavaScript", "TypeScript", "Python", "Java", "C++", "C", "Dart"]
@@ -13,13 +12,16 @@ export default function Skills() {
             {/* Languages */}
             <div>
                 <h2 className='text-xl font-semibold mb-2'>Languages</h2>
+                <div className='px-2 md:px-0'>
                 {languages.map((lang) => {
                     return <span key={languages} className='inline-block bg-blue-500 bg-opacity-30 px-3 py-1.5 text-xs font-medium text-blue-500 mr-2 mb-2 rounded-full'>{lang}</span>
                 })}
+                </div>
             </div>
             {/* Frameworks */}
             <div>
                 <h2 className='text-xl font-semibold mb-2'>Frameworks</h2>
+                <div className='px-2 md:px-0'>
                 {frameworks.map((lang) => {
                     return <span key={lang} className='inline-block bg-green-500 bg-opacity-30 px-3 py-1.5 text-xs font-medium text-green-500 mr-2 mb-2 rounded-full'>{lang}</span>
                 })}
@@ -27,23 +29,29 @@ export default function Skills() {
             {/* Backend */}
             <div>
                 <h2 className='text-xl font-semibold mb-2'>Backend</h2>
+                <div className='px-2 md:px-0'></div>
                 {backend.map((lang) => {
                     return <span key={lang} className="inline-block bg-purple-500 bg-opacity-30 px-3 py-1.5 text-xs font-medium text-purple-500 mr-2 mb-2 rounded-full">{lang}</span>
                 })}
+                </div>
             </div>
             {/* Database */}
             <div>
                 <h2 className='text-xl font-semibold mb-2'>Database</h2>
+                <div className='px-2 md:px-0'>
                 {database.map((lang) => {
                     return <span key={lang} className="inline-block bg-red-500 bg-opacity-30 px-3 py-1.5 text-xs font-medium text-red-500 mr-2 mb-2 rounded-full">{lang}</span>
                 })}
+                </div>
             </div>
             {/* Tools */}
             <div >
                 <h2 className='text-xl font-semibold mb-2'>Tools</h2>
+                <div className='px-2 md:px-0'>
                 {tools.map((lang) => {
                     return <span key={lang} className="inline-block bg-yellow-500 bg-opacity-30 px-3 py-1.5 text-xs font-medium text-yellow-500 mr-2 mb-2 rounded-full">{lang}</span>
                 })}
+                </div>
             </div>
         </div>
     )
