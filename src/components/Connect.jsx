@@ -3,7 +3,7 @@ import { useForm, ValidationError } from '@formspree/react';
 import { IoIosClose } from "react-icons/io";
 
 export default function Connect({ setShowConnect }) {
-    const [state, handleSubmit] = useForm("xbljojyw");
+    const [state, handleSubmit] = useForm("");
 
     // Use event parameter to prevent default behavior
     const handleSubmitForm = (event) => {
