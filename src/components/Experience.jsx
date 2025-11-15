@@ -15,8 +15,8 @@ export default function Experience() {
                             <div className='text-slate-400 flex items-center gap-4'>
                                 <img className="rounded-full w-[80px] shadow-sm shadow-white" src={experience.logo} alt={experience.company} />
                                 <div className='flex flex-col'>
-                                    <h1 className='text-xl font-bold text-white'>{experience.company}</h1>
-                                    <h3 className='text-[18px]'>{position.title}</h3>
+                                    <h1 className='text-xl font-bold text-white'>{position.title}</h1>
+                                    <h3 className='text-[18px]'>{experience.company}</h3>
                                     <h4 className='text-base'>{position.duration}</h4>
                                 </div>
                             </div>
