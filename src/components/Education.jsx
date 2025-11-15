@@ -14,8 +14,7 @@ export default function Education() {
                     <div className='flex flex-col'>
                         <h1 className='text-2xl text-white font-bold'>B.Tech (C.S.E)</h1>
                         <h3 className='text-[18px]'>B. P. Mandal college of engineering, Madhepura</h3>
-                        <h4 className='text-sm'>Aug 2022 - Present</h4>
-                        <h4 className='text-sm'>8.3 CGPA</h4>
+                        <h4 className='text-sm'>Aug 2022 - June 2025  <span className="font-bold">|</span> 8.48 CGPA </h4>
                     </div>
                 </div>
             </div>
@@ -30,8 +29,7 @@ export default function Education() {
                     <div className='flex flex-col'>
                         <h1 className='text-2xl text-white font-bold'>Diploma (C.S.E)</h1>
                         <h3 className='text-[18px]'>Government Polytechnic College, Gopalganj</h3>
-                        <h4 className='text-sm'>Sept 2019 - Aug 2022</h4>
-                        <h4 className='text-sm'>8.8 CGPA</h4>
+                        <h4 className='text-sm'>Sept 2019 - Aug 2022   <span className="font-bold">|</span> 8.79 CGPA </h4>
                     </div>
                 </div>
             </div>

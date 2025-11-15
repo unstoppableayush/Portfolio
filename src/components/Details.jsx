@@ -10,12 +10,12 @@ export default function Details() {
             {showConnect && <Connect setShowConnect={setShowConnect} />}
             <div className='flex flex-col md:items-start items-center gap-y-3'>
                 {/* profile Image */}
-                <img className=' rounded-full h-48 w-48' src="https://res.cloudinary.com/dxeslfxp7/image/upload/v1739294478/WhatsApp_Image_2025-02-11_at_10.46.51_PM_xyjrof.jpg" alt="Ayush Image" />
+                <img className=' rounded-full h-48 w-48' src="https://res.cloudinary.com/dxeslfxp7/image/upload/v1763248869/WhatsApp_Image_2025-10-29_at_11.52.04_AM_a1i4lx.jpg" alt="Ayush Image" />
                 {/* Brief Intro */}
                 <h1 className='text-4xl font-bold'>Ayush Kumar</h1>
                 <div className='text-slate-400'>Full Stack Developer</div>
                 <div className='text-slate-400 flex items-center gap-2'><IoLocationSharp className='text-red-500' /> <span>Patna, Bihar</span></div>
-                <div className='md:w-[68%] md:text-start text-center px-6 md:px-0 text-slate-400'>Passionate Full Stack Developer creating seamless, user-focused web applications that blend innovation and functionality.</div>
+                <div className='md:w-[68%] md:text-start text-center px-6 md:px-0 text-slate-400'>Passionate Full-Stack Developer crafting seamless, user-focused experiences.</div>
                 {/* Resume and Links */}
                 <div className='flex w-fit py-1 gap-6 items-center'>
                     <a className='flex items-center px-2 py-1 rounded-md gap-2 border-white border w-fit hover:bg-white hover:text-black transition-all duration-200' href="https://drive.google.com/file/d/10kOURX9Gd4Rw9q-mlBOYElIMCtfpo9pv/view" target='_blank'><FaFileDownload /><span>Resume</span></a>
