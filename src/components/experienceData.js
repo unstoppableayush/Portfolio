@@ -5,18 +5,18 @@ const experienceData = [
     logo: "https://suvidhaen.com/static/media/logo.04b8b06fba9049f9e13c.webp", // Add logo path here
     location: "Patna, Bihar, India",
     positions: [
-      {
-        title: "Software Developer",
-        type: "Full-time",
-        duration: "Jul 2025 - Present · 5 mos",
-        mode: "Hybrid",
-        responsibilities: [
-          "Built a scalable notification system using Django Q, AsyncIO, and Firebase.",
-          "Migrated the complete infrastructure from GCP to AWS.",
-          "Worked on an IoT project to store camera feeds and upload them to S3 for ML processing."
-        ],
-        skills: ["Engineering", "Software Design"]
-      },
+      // {
+      //   title: "Software Developer",
+      //   type: "Full-time",
+      //   duration: "Jul 2025 - Present · 5 mos",
+      //   mode: "Hybrid",
+      //   responsibilities: [
+      //     "Built a scalable notification system using Django Q, AsyncIO, and Firebase.",
+      //     "Migrated the complete infrastructure from GCP to AWS.",
+      //     "Worked on an IoT project to store camera feeds and upload them to S3 for ML processing."
+      //   ],
+      //   skills: ["Engineering", "Software Design"]
+      // },
       {
         title: "Software Developer Intern",
         type: "Internship",
