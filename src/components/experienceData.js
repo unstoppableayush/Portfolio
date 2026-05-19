@@ -41,7 +41,7 @@ const experienceData = [
   {
     id: 2,
     company: "Global Investors Forum",
-    logo: "https://media.licdn.com/dms/image/v2/C4E0BAQEP8_dEF9bsIg/company-logo_200_200/company-logo_200_200/0/1639031553829?e=1764806400&v=beta&t=aT95KhYvBojUKJZIPiQ_kwKY_S-rJjqbKk2CSZ55O3k", // Add logo path here
+    logo: "https://media.licdn.com/dms/image/v2/C4E0BAQEP8_dEF9bsIg/company-logo_200_200/company-logo_200_200/0/1639031553829?e=2147483647&v=beta&t=CTQDlhMR6tCmLl5087NV-r6sliZ7fGlKb3Tvoqfe8lQ", // Add logo path here
     location: "Remote",
     positions: [
       {
@@ -70,7 +70,7 @@ const experienceData = [
   {
     id: 3,
     company: "National Institute of Electronics & Information Technology (NIELIT), Patna",
-    logo: "https://media.licdn.com/dms/image/v2/C510BAQGcbhQGKceOmg/company-logo_200_200/company-logo_200_200/0/1630608152711?e=1764806400&v=beta&t=JHOA8F4iHYbTg8Y0FJJAuuhgTIMeTMfB0ts7zioJvps", // Add logo path here
+    logo: "https://mimitmalout.ac.in/NIELIT.png", // Add logo path here
     location: "Patna, Bihar, India",
     positions: [
       {

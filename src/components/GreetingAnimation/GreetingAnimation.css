@@ -2,8 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    position: fixed;
+    inset: 0;
+    background-color: #0b0d12;
+    z-index: 50;
     font-family: 'Arial', sans-serif;
 }
 

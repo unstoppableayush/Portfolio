@@ -34,7 +34,7 @@ const GreetingAnimation = () => {
 
     return (
         !isCompleted && (
-            <div className="animation-container absolute h-screen w-screen bg-black">
+            <div className="animation-container">
                 <h1 className="greeting-text">{greetings[currentIndex]}</h1>
             </div>
         )

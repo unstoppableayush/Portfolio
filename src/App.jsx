@@ -1,17 +1,24 @@
 import "./App.css";
-import Details from "./components/Details";
-import RightSide from "./components/RightSide";
-import GreetingAnimation from "./components/GreetingAnimation/GreetingAnimation";
-function App() {
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import BlogsPage from "./pages/BlogsPage";
+import Admin from "./pages/Admin";
+import BlogDetail from "./pages/BlogDetail";
+import StartProject from "./pages/StartProject";
+import ScrollToTop from "./components/ScrollToTop";
 
+function App() {
   return (
-    <div className="bg-black md:h-screen overflow-hidden text-white w-full min-h-screen flex md:flex-row flex-col md:justify-center">
-      <GreetingAnimation />
-      {/* LeftSide */}
-      <Details />
-      {/* RightSide */}
-      <RightSide />
-    </div>
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/blogs" element={<BlogsPage />} />
+        <Route path="/blogs/:slug" element={<BlogDetail />} />
+        <Route path="/start-project" element={<StartProject />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

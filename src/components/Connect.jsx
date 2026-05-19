@@ -19,18 +19,18 @@ export default function Connect({ setShowConnect }) {
     }
 
     return (
-        <form className='absolute z-20 shadow-sm shadow-white flex flex-col gap-3 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 items-center justify-center transition-all duration-200 text-white px-10 py-20 sm:w-[400px] md:h-[400px] rounded-md' onSubmit={handleSubmitForm}>
+        <form className="absolute z-20 flex flex-col gap-3 rounded-3xl border border-white/10 bg-[#141622] px-10 py-12 text-white shadow-xl shadow-black/40 sm:w-[400px]" onSubmit={handleSubmitForm}>
             <div onClick={() => {
                 setShowConnect(false);
-            }} className='absolute top-1 right-1 text-3xl cursor-pointer text-gray-300'>
+            }} className="absolute right-3 top-3 cursor-pointer text-3xl text-white/60">
                 <IoIosClose />
             </div>
-            <div className='flex flex-col'>
-                <label htmlFor="email">
+            <div className="flex flex-col">
+                <label className="text-sm text-white/70" htmlFor="email">
                     Email Address
                 </label>
                 <input
-                    className='px-2 py-1 rounded-md outline-none border-white bg-slate-800 text-slate-100 border'
+                    className="mt-2 rounded-2xl border border-white/10 bg-transparent px-3 py-2 text-sm text-white outline-none focus:border-white/30"
                     id="email"
                     type="email"
                     name="email"
@@ -41,23 +41,23 @@ export default function Connect({ setShowConnect }) {
                     errors={state.errors}
                 />
             </div>
-            <div className='flex flex-col'>
-                <label htmlFor="name">
+            <div className="flex flex-col">
+                <label className="text-sm text-white/70" htmlFor="name">
                     Name
                 </label>
                 <input
-                    className='px-2 py-1  rounded-md outline-none border-white bg-slate-800 text-slate-100 border'
+                    className="mt-2 rounded-2xl border border-white/10 bg-transparent px-3 py-2 text-sm text-white outline-none focus:border-white/30"
                     id="name"
                     type="text"
                     name="name"
                 />
             </div>
-            <div className='flex flex-col'>
-                <label htmlFor="message">
+            <div className="flex flex-col">
+                <label className="text-sm text-white/70" htmlFor="message">
                     Message
                 </label>
                 <textarea
-                    className='px-2 py-1 rounded-md outline-none border-white bg-slate-800 text-slate-100 border'
+                    className="mt-2 min-h-[120px] rounded-2xl border border-white/10 bg-transparent px-3 py-2 text-sm text-white outline-none focus:border-white/30"
                     id="message"
                     name="message"
                 />
@@ -67,7 +67,7 @@ export default function Connect({ setShowConnect }) {
                     errors={state.errors}
                 />
             </div>
-            <button className='bg-purple-600 hover:bg-purple-800 transition-all duration-200 hover:text-slate-300 text-sm mx-auto w-fit px-4 py-2 rounded-md' type="submit" disabled={state.submitting}>
+            <button className="mt-2 w-fit rounded-full bg-[#f7b955] px-4 py-2 text-sm font-semibold text-[#1a1206] transition hover:bg-[#f4a93b]" type="submit" disabled={state.submitting}>
                 Submit
             </button>
         </form>
