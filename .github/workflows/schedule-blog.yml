@@ -1,0 +1,25 @@
+name: Schedule AI Blog Post
+
+on:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+
+jobs:
+  post-blog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger blog generation
+        env:
+          VERCEL_CRON_URL: ${{ vars.VERCEL_CRON_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$VERCEL_CRON_URL" ]; then
+            echo "Missing VERCEL_CRON_URL repository variable."
+            exit 1
+          fi
+
+          curl -s -X POST "$VERCEL_CRON_URL" \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            -H "Content-Type: application/json" \
+            -d '{"topic":"Daily AI blog for Agentic AI"}'

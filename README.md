@@ -117,3 +117,37 @@ src/
 - The profile image and resume link use local fallback values if Supabase is not configured or the `profile_settings` row is empty.
 - Blog thumbnails are uploaded to the `blog-thumbs` Supabase Storage bucket.
 - Keep `.env` out of git. Use `.env.example` for public environment variable names only.
+
+## Scheduled AI blog posts
+
+This project includes a Vercel API route and a GitHub Actions workflow that can generate and post a blog daily.
+
+### Vercel API route
+
+The API route lives at `/api/generateAndPostBlog` and will:
+
+- Generate a blog using the Gemini API.
+- Insert the generated blog into the `blogs` table using the Supabase service role key.
+
+Required environment variables on Vercel:
+
+```env
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+CRON_SECRET=
+GEMINI_API_KEY=
+GEMINI_MODEL=
+```
+
+Notes:
+
+- The API expects the `Authorization` header to be `Bearer $CRON_SECRET`.
+
+### GitHub Actions scheduler
+
+The workflow file is located at `.github/workflows/schedule-blog.yml` and triggers once per day.
+
+Set these in your GitHub repository settings:
+
+- Repository variable: `VERCEL_CRON_URL` (example: `https://your-vercel-domain/api/generateAndPostBlog`)
+- Repository secret: `CRON_SECRET` (must match the Vercel `CRON_SECRET`)
