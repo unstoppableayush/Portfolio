@@ -64,7 +64,7 @@ async function generateViaGemini({ topic, model, apiKey }) {
           role: "user",
           parts: [
             {
-              text: `Write a blog post about: ${topic}. Return ONLY JSON with keys: title, contentHtml, excerpt, tags, coverUrl, url. Keep contentHtml as HTML (paragraphs and headings).`,
+              text: `Write a blog post about: ${topic}. Return ONLY JSON with keys: title, contentHtml, excerpt, tags, coverUrl, url. Keep contentHtml as HTML (paragraphs and headings). Title should of one line.`,
             },
           ],
         },
@@ -96,7 +96,7 @@ async function generateViaGemini({ topic, model, apiKey }) {
     excerpt: parsed.excerpt,
     tags: parsed.tags,
     coverUrl: parsed.coverUrl,
-    url: parsed.url,
+    // url: parsed.url, // Optional: If you want to include a URL in the future, ensure your Gemini prompt and response include it.
   };
 }
 
