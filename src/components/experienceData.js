@@ -2,7 +2,7 @@ const experienceData = [
   {
     id: 0,
     company: "Tata Consultancy Services (TCS)",
-    logo: "https://www.tcs.com/content/dam/global-tcs/en/images/home/tcs-logo-1.svg", // Add logo path here
+    logo: "hhttps://www.tcs.com/content/dam/global-tcs/en/images/who-we-are/media-kit/tcs-light-logo.png", // Add logo path here
     location: "New Delhi, India",
     positions: [
       {
