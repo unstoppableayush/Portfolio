@@ -25,7 +25,7 @@ export default function Details() {
 
                 <div>
                     <p className="text-xs uppercase tracking-[0.4em] text-white/50">
-                        Full Stack Developer
+                        Software/AI Engineer 
                     </p>
                     <h1 className="mt-3 text-4xl font-display text-white">Ayush Kumar</h1>
                 </div>

@@ -22,7 +22,7 @@ export default function Experience() {
                                 </div>
                             </div>
                             {/* Works */}
-                            <ul className="list-disc list-outside pl-4 text-sm text-white/70">
+                            <ul className="list-disc list-outside pl-5 text-sm text-white/70">
                                 {position.responsibilities.map((responsibility, idx) => (
                                     <li key={idx} className="mb-2">{responsibility}</li>
                                 ))}

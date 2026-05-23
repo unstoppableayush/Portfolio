@@ -1,24 +1,29 @@
 const projectData = [
   {
-    id: 1,
-    name: "OJAS’X (Event Management Platform for College)",
-    poster:
-      "https://res.cloudinary.com/dfrcswf0n/image/upload/v1730803846/Screenshot_2024-11-05_162028_cw8xlo.png",
+    id: 0,
+    name: "Speaking App - AI-Powered",
+    poster: "", // Add poster image URL here
     points: [
-      `Developed a full-stack event management platform with React, Node.js, Express, and MongoDB, serving 
-            1000+ registered students and processing 700+ secure transactions through Razorpay.`,
-      `Enhanced platform security with private routes and Redux for state management, enabling seamless 
-            navigation and secure user interactions.`,
-      `Designed invoice and event tracking features, reducing administrative workload by 30% and allowing users 
-            to track registrations and download invoices directly. `,
+      "Developed an AI-powered English speaking practice app with real-time voice sessions, multi-provider LLM fallback, and Deepgram speech-to-text streaming.",
+      "Built a speech scoring engine with AI feedback, leaderboard, and weakness analysis.",
+      "Secured the platform with JWT + RBAC and Redis Pub/Sub for scalable WebSocket communication.",
     ],
-    technologies: ["ReactJs", "ExpressJS", "NodeJS", "TailwindCSS", "MongoDB"],
-    github: "https://github.com/unstoppableayush/ojasx",
-    live: "https://ojasxislive.vercel.app/",
+    technologies: [
+      "ReactJs",
+      "TypeScript",
+      "FastAPI",
+      "PostgreSQL",
+      "Redis",
+      "WebSocket",
+      "Docker",
+      "LLM",
+    ],
+    github: "https://github.com/unstoppableayush/Talk-In-English",
+    live: "https://talk-in-english.vercel.app/",
   },
   {
     id: 2,
-    name: "SmartPrep",
+    name: "SmartPrep - E learning Platform",
     poster: "", // Add poster image URL here
     points: [
       `SmartPrep is a comprehensive platform built for engineering students to learn, share, and grow together as a community. It offers a responsive and interactive interface accessible across all devices, with separate dashboards for students and administrators.`,
@@ -89,6 +94,23 @@ const projectData = [
     technologies: ["React.js", "Node.js", "Cloudinary", "Framer Motion"],
     github: "", // Add GitHub URL here
     live: "", // Add live URL here
+  },
+  {
+    id: 1,
+    name: "OJAS’X (Event Management Platform for College)",
+    poster:
+      "https://res.cloudinary.com/dfrcswf0n/image/upload/v1730803846/Screenshot_2024-11-05_162028_cw8xlo.png",
+    points: [
+      `Developed a full-stack event management platform with React, Node.js, Express, and MongoDB, serving 
+            1000+ registered students and processing 700+ secure transactions through Razorpay.`,
+      `Enhanced platform security with private routes and Redux for state management, enabling seamless 
+            navigation and secure user interactions.`,
+      `Designed invoice and event tracking features, reducing administrative workload by 30% and allowing users 
+            to track registrations and download invoices directly. `,
+    ],
+    technologies: ["ReactJs", "ExpressJS", "NodeJS", "TailwindCSS", "MongoDB"],
+    github: "https://github.com/unstoppableayush/ojasx",
+    live: "https://ojasxislive.vercel.app/",
   },
 ];
 export default projectData;

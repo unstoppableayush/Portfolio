@@ -1,16 +1,18 @@
 
 export default function Skills() {
-    const languages = ["JavaScript", "TypeScript", "Python", "Java", "C++", "C", "Dart"]
-    const frameworks = ["ReactJs", "NextJs", "ExpressJs", "TailwindCSS", "Bootstrap", "Flutter"]
-    const backend = ["Django", "NodeJs", "REST APIs", "CRUD operations", "Socket.IO"]
-    const database = ["MongoDB", "SQL", "Postgress", "Prisma"]
-    const tools = ["Git", "GitHub", "Visual Studio Code", "Postman", "Docker", "Linux", "AWS"]
+    const languages = ["Python", "JavaScript", "TypeScript", "Java", "C++", "C"]
+    const frameworks = ["ReactJs", "NextJs", "ExpressJs", "TailwindCSS", "Flutter"]
+    const backend = ["Django", "FastAPI", "NodeJs", "REST APIs", "Supabase", "Socket.IO"]
+    const database = ["Postgress", "MongoDB", "SQLite", "Redis", "ChromaDB", "Pineocode"]
+    const aiMl = ["LLMs", "RAG", "LangChain", "LangGraph", "MCP", "Crew AI", "Copilot Studio", "Vector Databases", "Prompt Engineering"]
+    const tools = ["Git", "GitHub", "Visual Studio Code", "Postman", "Docker", "Linux", "AWS", "GCP", "Ngnix"]
 
     const sections = [
         { title: "Languages", items: languages },
         { title: "Frameworks", items: frameworks },
         { title: "Backend", items: backend },
         { title: "Database", items: database },
+        { title: "AI/ML", items: aiMl },
         { title: "Tools", items: tools },
     ]
 

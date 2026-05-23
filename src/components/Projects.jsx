@@ -46,7 +46,7 @@ export default function Projects() {
                                 </div>
                             </div>
 
-                            <ul className="list-disc list-outside pl-4 text-sm text-white/70">
+                            <ul className="list-disc list-outside pl-5 text-sm text-white/70">
                                 {project.points.map((list, i) => (
                                     <li key={i} className="mb-2">{list}</li>
                                 ))}

@@ -7,7 +7,7 @@ export default function About() {
                 I'm a versatile full-stack developer capable of handling everything from building scalable applications to managing servers and deployments.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-white/70">
-                With experience across frontend, backend, and infrastructure, I can take a project from idea to production, ensuring performance, reliability, and clean user experience.
+                With experience across frontend, backend, infrastructure, and AI systems like agents and RAG applications, I can take a project from idea to production, ensuring performance, reliability, and clean user experience.
             </p>
         </section>
     )

@@ -1,22 +1,29 @@
 const experienceData = [
   {
+    id: 0,
+    company: "Tata Consultancy Services (TCS)",
+    logo: "https://www.tcs.com/content/dam/global-tcs/en/images/home/tcs-logo-1.svg", // Add logo path here
+    location: "New Delhi, India",
+    positions: [
+      {
+        title: "AI Engineer",
+        type: "Full-time",
+        duration: "Jan 2026 - Present · 5 mos",
+        mode: "New Delhi, India (On-site)",
+        responsibilities: [
+          "Building AI agents to simplify the task and reduce the human effort and time.",
+          "Developing agents in copilot studio environment by integrating with custom tools and software."
+        ],
+        skills: ["Engineering", "Software Design", "FastAPI", "Langchain", "LangGraph", "MCP", "Copilot studio" , "Power Automate", "Dataverse", "RAG" ],
+      },
+    ]
+  },
+  {
     id: 1,
     company: "Sarva Suvidhaen Private Limited",
     logo: "https://suvidhaen.com/static/media/logo.04b8b06fba9049f9e13c.webp", // Add logo path here
     location: "Patna, Bihar, India",
     positions: [
-      // {
-      //   title: "Software Developer",
-      //   type: "Full-time",
-      //   duration: "Jul 2025 - Present · 5 mos",
-      //   mode: "Hybrid",
-      //   responsibilities: [
-      //     "Built a scalable notification system using Django Q, AsyncIO, and Firebase.",
-      //     "Migrated the complete infrastructure from GCP to AWS.",
-      //     "Worked on an IoT project to store camera feeds and upload them to S3 for ML processing."
-      //   ],
-      //   skills: ["Engineering", "Software Design"]
-      // },
       {
         title: "Software Developer Intern",
         type: "Internship",
@@ -25,16 +32,16 @@ const experienceData = [
         responsibilities: [
           "Contributed to multiple railway projects focused on real-time monitoring and operations.",
           "Scaled user base from 100 to over 5,000+ users through automation scripts and streamlined user management.",
+          "Built a scalable notification system using Django Q, AsyncIO, and Firebase.",
+          "Built an IoT project to show live cameras feed and store feeds to upload them to S3 for ML processing.",
           "Deployed multiple instances to efficiently manage data load and reduce cloud costs.",
           "Enhanced data processing efficiency by 40% through backend automation.",
           "Developed REST APIs and implemented UI features for core functionalities.",
-          "Followed Agile methodology for regular updates and feature enhancements.",
-          "Collaborated with the team using Git and GitHub for effective version control.",
           "Automated manual tasks with custom Shell and Python scripts.",
+          "Migrated the complete infrastructure from GCP to AWS.",
           "Worked closely with clients to gather requirements and deliver tailored solutions.",
-          "Deployed and managed services on Google Cloud Platform (GCP)."
         ],
-        skills: ["Python (Programming Language)", "Django", "Git", "GitHub", "GCP", "REST APIs", "Shell Scripting", "Agile"]
+        skills: ["Python" ,"Javascript", "Django" ,"FastAPI", "AWS" , "GCP" , "Git", "GitHub", "Scripting", "Linux", "Flutter" ,"React.js" , "Docker"]
       }
     ]
   },
