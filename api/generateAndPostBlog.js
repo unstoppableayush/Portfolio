@@ -9,10 +9,10 @@ const COVER_BUCKET = "blog-thumbs";
 const RECENT_TITLES_LIMIT = 10;
 
 // Default model for text generation (must support google_search grounding)
-const DEFAULT_TEXT_MODEL = "gemini-2.0-flash";
+const DEFAULT_TEXT_MODEL = "gemini-3.5-flash";
 
-// Model for image generation
-const DEFAULT_IMAGE_MODEL = "gemini-2.0-flash-preview-image-generation";
+// Model for image generation (gemini-2.0-flash-preview-image-generation was deprecated Nov 2025)
+const DEFAULT_IMAGE_MODEL = "gemini-2.5-flash-image";
 
 const AI_AUTHOR_NAME = "AI";
 
@@ -221,7 +221,7 @@ Requirements:
 - Suggest 3–5 relevant, specific tags (e.g. "LLM", "Computer Vision", not just "AI")
 - Write a short image prompt (10-20 words) describing an ideal abstract cover image for this post (tech-themed, no text)
 ${avoidSection}
-Return ONLY valid JSON (no markdown fences, no extra text) with these exact keys:
+Return ONLY valid JSON with these exact keys:
 {
   "title": "...",
   "contentHtml": "...",
@@ -229,6 +229,32 @@ Return ONLY valid JSON (no markdown fences, no extra text) with these exact keys
   "tags": ["...", "..."],
   "imagePrompt": "..."
 }`;
+
+  // JSON schema for structured output — ensures the model always returns valid JSON
+  const responseSchema = {
+    type: "object",
+    properties: {
+      title: { type: "string", description: "Blog post title" },
+      contentHtml: {
+        type: "string",
+        description: "Full blog content in semantic HTML",
+      },
+      excerpt: {
+        type: "string",
+        description: "Short excerpt, max 160 characters",
+      },
+      tags: {
+        type: "array",
+        items: { type: "string" },
+        description: "3-5 relevant tags",
+      },
+      imagePrompt: {
+        type: "string",
+        description: "Short image prompt for cover art (10-20 words)",
+      },
+    },
+    required: ["title", "contentHtml", "excerpt", "tags", "imagePrompt"],
+  };
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
@@ -244,8 +270,9 @@ Return ONLY valid JSON (no markdown fences, no extra text) with these exact keys
           contents: [{ role: "user", parts: [{ text: prompt }] }],
           generationConfig: {
             temperature: 0.8,
-            maxOutputTokens: 4096,
+            maxOutputTokens: 8192,
             responseMimeType: "application/json",
+            responseSchema,
           },
         }),
       });
@@ -256,6 +283,10 @@ Return ONLY valid JSON (no markdown fences, no extra text) with these exact keys
       }
 
       const data = await response.json();
+      console.log(
+        `Attempt ${attempt}: Gemini finish_reason:`,
+        data?.candidates?.[0]?.finishReason
+      );
       const raw =
         data?.candidates?.[0]?.content?.parts
           ?.map((p) => p.text)
