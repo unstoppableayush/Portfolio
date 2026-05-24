@@ -61,11 +61,56 @@ function normalizeTags(tags) {
 
 function extractJson(text) {
   if (!text) return null;
-  const start = text.indexOf("{");
-  const end = text.lastIndexOf("}");
-  if (start === -1 || end === -1 || end <= start) return null;
-  const slice = text.slice(start, end + 1);
-  return JSON.parse(slice);
+
+  // 1. Strip markdown code fences (```json ... ``` or ``` ... ```)
+  let cleaned = text.replace(/```(?:json)?\s*\n?/gi, "").trim();
+
+  // 2. Try the simple first-{ to last-} slice
+  const start = cleaned.indexOf("{");
+  const end = cleaned.lastIndexOf("}");
+  if (start !== -1 && end > start) {
+    try {
+      return JSON.parse(cleaned.slice(start, end + 1));
+    } catch {
+      // fall through to brace-matching
+    }
+  }
+
+  // 3. Brace-matching: walk from the first { and find its balanced closing }
+  if (start !== -1) {
+    let depth = 0;
+    let inString = false;
+    let escape = false;
+    for (let i = start; i < cleaned.length; i++) {
+      const ch = cleaned[i];
+      if (escape) {
+        escape = false;
+        continue;
+      }
+      if (ch === "\\") {
+        escape = true;
+        continue;
+      }
+      if (ch === '"') {
+        inString = !inString;
+        continue;
+      }
+      if (inString) continue;
+      if (ch === "{") depth++;
+      if (ch === "}") {
+        depth--;
+        if (depth === 0) {
+          try {
+            return JSON.parse(cleaned.slice(start, i + 1));
+          } catch {
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  return null;
 }
 
 function readBody(body) {
@@ -176,7 +221,7 @@ Requirements:
 - Suggest 3–5 relevant, specific tags (e.g. "LLM", "Computer Vision", not just "AI")
 - Write a short image prompt (10-20 words) describing an ideal abstract cover image for this post (tech-themed, no text)
 ${avoidSection}
-Return ONLY valid JSON with these exact keys:
+Return ONLY valid JSON (no markdown fences, no extra text) with these exact keys:
 {
   "title": "...",
   "contentHtml": "...",
@@ -187,39 +232,64 @@ Return ONLY valid JSON with these exact keys:
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.8,
-        maxOutputTokens: 4096,
-      },
-    }),
-  });
+  const MAX_RETRIES = 3;
+  let lastError = null;
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gemini content generation error: ${errorText}`);
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.8,
+            maxOutputTokens: 4096,
+            responseMimeType: "application/json",
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Gemini API error (${response.status}): ${errorText}`);
+      }
+
+      const data = await response.json();
+      const raw =
+        data?.candidates?.[0]?.content?.parts
+          ?.map((p) => p.text)
+          .join("\n") || "";
+      const parsed = extractJson(raw);
+
+      if (!parsed) {
+        console.error(
+          `Attempt ${attempt}/${MAX_RETRIES}: Failed to parse JSON from Gemini response. Raw output (first 500 chars):`,
+          raw.slice(0, 500)
+        );
+        throw new Error("Gemini response did not contain valid JSON.");
+      }
+
+      return {
+        title: parsed.title,
+        contentHtml: parsed.contentHtml,
+        excerpt: parsed.excerpt,
+        tags: parsed.tags,
+        imagePrompt: parsed.imagePrompt || "",
+      };
+    } catch (err) {
+      lastError = err;
+      console.error(`Attempt ${attempt}/${MAX_RETRIES} failed:`, err.message);
+      if (attempt < MAX_RETRIES) {
+        // Exponential backoff: 1s, 2s
+        await new Promise((r) => setTimeout(r, 1000 * attempt));
+      }
+    }
   }
 
-  const data = await response.json();
-  const raw =
-    data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("\n") || "";
-  const parsed = extractJson(raw);
-
-  if (!parsed) {
-    throw new Error("Gemini response did not contain valid JSON.");
-  }
-
-  return {
-    title: parsed.title,
-    contentHtml: parsed.contentHtml,
-    excerpt: parsed.excerpt,
-    tags: parsed.tags,
-    imagePrompt: parsed.imagePrompt || "",
-  };
+  throw new Error(
+    `Blog content generation failed after ${MAX_RETRIES} attempts. Last error: ${lastError?.message}`
+  );
 }
 
 // ---------------------------------------------------------------------------
