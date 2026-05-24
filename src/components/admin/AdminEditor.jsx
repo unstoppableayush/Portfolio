@@ -29,6 +29,7 @@ export default function AdminEditor() {
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
   const [selectedId, setSelectedId] = useState("");
   const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
   const [slug, setSlug] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [tags, setTags] = useState("");
@@ -76,7 +77,7 @@ export default function AdminEditor() {
       const { data, error: fetchError } = await supabase
         .from("blogs")
         .select(
-          "id,title,slug,excerpt,tags,read_time,url,cover_url,published_at,content"
+          "id,title,author,slug,excerpt,tags,read_time,url,cover_url,published_at,content"
         )
         .order("published_at", { ascending: false, nullsLast: true });
 
@@ -118,6 +119,7 @@ export default function AdminEditor() {
   function resetForm() {
     setSelectedId("");
     setTitle("");
+    setAuthor("");
     setSlug("");
     setExcerpt("");
     setTags("");
@@ -134,6 +136,7 @@ export default function AdminEditor() {
   function handleSelect(post) {
     setSelectedId(post.id);
     setTitle(post.title || "");
+    setAuthor(post.author || "");
     setSlug(post.slug || "");
     setExcerpt(post.excerpt || "");
     setTags(Array.isArray(post.tags) ? post.tags.join(", ") : "");
@@ -185,6 +188,11 @@ export default function AdminEditor() {
       return;
     }
 
+    if (!author.trim()) {
+      setError("Author name is required.");
+      return;
+    }
+
     if (!editor) {
       setError("Editor is not ready.");
       return;
@@ -200,6 +208,7 @@ export default function AdminEditor() {
         : coverUrl;
       const payload = {
         title,
+        author: author.trim(),
         slug: finalSlug,
         excerpt,
         content: editor.getHTML(),
@@ -233,7 +242,7 @@ export default function AdminEditor() {
       const { data: refreshedPosts } = await supabase
         .from("blogs")
         .select(
-          "id,title,slug,excerpt,tags,read_time,url,cover_url,published_at,content"
+          "id,title,author,slug,excerpt,tags,read_time,url,cover_url,published_at,content"
         )
         .order("published_at", { ascending: false, nullsLast: true });
       setPosts(refreshedPosts || []);
@@ -270,6 +279,19 @@ export default function AdminEditor() {
               id="title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
+              className="rounded-2xl border border-white/10 bg-transparent px-3 py-2 text-sm text-white outline-none focus:border-white/30"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <label className="text-sm text-white/70" htmlFor="author">
+              Author name
+            </label>
+            <input
+              id="author"
+              value={author}
+              onChange={(event) => setAuthor(event.target.value)}
+              placeholder="Your name"
               className="rounded-2xl border border-white/10 bg-transparent px-3 py-2 text-sm text-white outline-none focus:border-white/30"
             />
           </div>

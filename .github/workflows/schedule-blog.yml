@@ -19,7 +19,9 @@ jobs:
             exit 1
           fi
 
+          # The API auto-discovers trending AI topics via Google Search grounding.
+          # Send an empty body to let it pick today's top story automatically.
           curl -s -X POST "$VERCEL_CRON_URL" \
             -H "Authorization: Bearer $CRON_SECRET" \
             -H "Content-Type: application/json" \
-            -d '{"topic":"Daily AI blog for Agentic AI"}'
+            -d '{}'

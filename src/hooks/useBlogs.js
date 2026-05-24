@@ -16,6 +16,7 @@ function normalizeBlog(blog) {
   return {
     id: blog.id,
     title: blog.title || "Untitled",
+    author: blog.author || "",
     slug: blog.slug || "",
     excerpt: blog.excerpt || blog.summary || "No excerpt available yet.",
     coverUrl: blog.cover_url || blog.coverUrl || "",

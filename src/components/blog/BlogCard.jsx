@@ -40,6 +40,7 @@ export default function BlogCard({ blog, compact = false }) {
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-white/60">
           {dateLabel && <span>{dateLabel}</span>}
+          {blog.author && <span>By {blog.author}</span>}
           {blog.readTime && <span>{blog.readTime} min read</span>}
         </div>
 
