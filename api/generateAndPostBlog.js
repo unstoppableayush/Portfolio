@@ -1,3 +1,5 @@
+import { Buffer } from "node:buffer";
+import process from "node:process";
 import { createClient } from "@supabase/supabase-js";
 
 // ---------------------------------------------------------------------------
@@ -11,8 +13,8 @@ const RECENT_TITLES_LIMIT = 10;
 // Default model for text generation (must support google_search grounding)
 const DEFAULT_TEXT_MODEL = "gemini-3.5-flash";
 
-// Model for image generation (gemini-2.0-flash-preview-image-generation was deprecated Nov 2025)
-const DEFAULT_IMAGE_MODEL = "gemini-2.5-flash-image";
+// Pollinations image generation endpoint
+const POLLINATIONS_BASE_URL = "https://image.pollinations.ai/p";
 
 const AI_AUTHOR_NAME = "AI";
 
@@ -324,54 +326,40 @@ Return ONLY valid JSON with these exact keys:
 }
 
 // ---------------------------------------------------------------------------
-// Step 4 — Generate a cover image via Gemini Imagen
+// Step 4 — Generate a cover image via Pollinations
 // ---------------------------------------------------------------------------
 
-async function generateCoverImage({ imagePrompt, title, apiKey }) {
+async function generateCoverImage({ imagePrompt, title }) {
   const prompt =
     imagePrompt ||
     `Abstract, futuristic tech blog cover for: ${title}. Vibrant gradients, geometric shapes, no text.`;
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_IMAGE_MODEL}:generateContent?key=${apiKey}`;
+  console.log(`[IMAGE] Prompt: ${prompt.slice(0, 120)}...`);
+
+  const endpoint = `${POLLINATIONS_BASE_URL}/${encodeURIComponent(prompt)}?width=1024&height=576&enhance=true`;
+  console.log(`[IMAGE] Using Pollinations URL: ${endpoint}`);
 
   const response = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [
-        {
-          role: "user",
-          parts: [
-            {
-              text: `Generate a visually stunning blog cover image: ${prompt}. Style: modern, clean, abstract, tech-themed. Aspect ratio: landscape 16:9. No text or words in the image.`,
-            },
-          ],
-        },
-      ],
-      generationConfig: {
-        responseModalities: ["IMAGE", "TEXT"],
-      },
-    }),
+    method: "GET",
   });
+
+  console.log(`[IMAGE] Pollinations response status: ${response.status}`);
 
   if (!response.ok) {
     const errText = await response.text();
-    console.error("Image generation failed:", errText);
+    console.error(`[IMAGE] ❌ Image generation failed (${response.status}):`, errText);
     return null;
   }
 
-  const data = await response.json();
-  const parts = data?.candidates?.[0]?.content?.parts || [];
-  const imagePart = parts.find((p) => p.inlineData);
-
-  if (!imagePart) {
-    console.error("No inline image data returned by Gemini.");
-    return null;
-  }
+  const contentType = response.headers.get("content-type") || "image/jpeg";
+  const arrayBuffer = await response.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  const sizeKB = Math.round(buffer.length / 1024);
+  console.log(`[IMAGE] ✅ Image received: ${contentType}, ~${sizeKB} KB`);
 
   return {
-    base64: imagePart.inlineData.data,
-    mimeType: imagePart.inlineData.mimeType || "image/png",
+    base64: buffer.toString("base64"),
+    mimeType: contentType,
   };
 }
 
@@ -386,6 +374,7 @@ async function uploadCoverToStorage(supabase, imageData, slug) {
 
     // Decode base64 → Buffer
     const buffer = Buffer.from(imageData.base64, "base64");
+    console.log(`[UPLOAD] Uploading to bucket "${COVER_BUCKET}", path: ${filePath}, size: ${buffer.length} bytes (${Math.round(buffer.length / 1024)} KB)`);
 
     const { error: uploadError } = await supabase.storage
       .from(COVER_BUCKET)
@@ -395,17 +384,22 @@ async function uploadCoverToStorage(supabase, imageData, slug) {
       });
 
     if (uploadError) {
-      console.error("Supabase Storage upload failed:", uploadError.message);
+      console.error(`[UPLOAD] ❌ Supabase Storage upload failed:`, uploadError.message, uploadError);
       return "";
     }
+
+    console.log(`[UPLOAD] ✅ File uploaded successfully to: ${filePath}`);
 
     const { data } = supabase.storage
       .from(COVER_BUCKET)
       .getPublicUrl(filePath);
 
-    return data?.publicUrl || "";
+    const publicUrl = data?.publicUrl || "";
+    console.log(`[UPLOAD] Public URL: ${publicUrl || "(empty — bucket may not be public)" }`);
+
+    return publicUrl;
   } catch (err) {
-    console.error("Cover upload error:", err.message);
+    console.error(`[UPLOAD] ❌ Cover upload error:`, err.message, err);
     return "";
   }
 }
@@ -519,22 +513,25 @@ export default async function handler(req, res) {
     // 4. Generate cover image
     // -----------------------------------------------------------------------
     let coverUrl = "";
-    console.log("Generating cover image...");
+    console.log("[PIPELINE] Generating cover image...");
+    console.log(`[PIPELINE] imagePrompt from content generation: "${generated.imagePrompt || "(none)"}"`);
     const imageData = await generateCoverImage({
       imagePrompt: generated.imagePrompt,
       title,
-      apiKey: geminiKey,
     });
 
     // -----------------------------------------------------------------------
     // 5. Upload cover image to Supabase Storage
     // -----------------------------------------------------------------------
     if (imageData) {
+      console.log(`[PIPELINE] Image generated successfully (${imageData.mimeType}, base64 length: ${imageData.base64.length})`);
       const baseSlug = slugify(title) || `post-${Date.now()}`;
       coverUrl = await uploadCoverToStorage(supabase, imageData, baseSlug);
-      console.log("Cover uploaded:", coverUrl);
+      console.log(`[PIPELINE] Final cover_url to be saved: "${coverUrl}"`);
     } else {
-      console.warn("Skipping cover image — generation returned nothing.");
+      // Fallback: use an Unsplash image based on the topic/tags
+      coverUrl = `https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=630&fit=crop&q=80`;
+      console.warn(`[PIPELINE] ⚠️ Pollinations image generation failed — using fallback cover: ${coverUrl}`);
     }
 
     // -----------------------------------------------------------------------
@@ -569,7 +566,8 @@ export default async function handler(req, res) {
     }
 
     console.log("Blog published:", data);
-    return res.status(200).json({ ok: true, topic, data });
+    console.log(`[PIPELINE] ✅ Blog saved with cover_url: "${coverUrl}"`);
+    return res.status(200).json({ ok: true, topic, cover_url: coverUrl, data });
   } catch (error) {
     console.error("Blog generation failed:", error);
     return res
