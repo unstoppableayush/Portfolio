@@ -150,7 +150,7 @@ async function discoverTrendingTopic({ apiKey, model }) {
           role: "user",
           parts: [
             {
-              text: `Today is ${today}. Search for the most interesting and trending AI or artificial intelligence news story from today or the past 24 hours. Pick ONE specific, concrete topic (not generic). Return ONLY the topic as a short phrase of 5-15 words. No explanation, no quotes, no punctuation at the end.`,
+              text: `Today is ${today}. Search GitHub and the web for a trending AI-agent repository or topic with strong recent momentum. Prefer repositories with 10k+ stars and real popularity signals, and choose a concrete subject such as Mem0, Hermes Agent, ComputerOS, or OpenClaw if relevant. Return ONLY one short phrase naming the repo or topic in a human-readable way, 5-15 words max. No explanation, no quotes, no punctuation at the end.`,
             },
           ],
         },
@@ -216,8 +216,10 @@ Write an original, in-depth, and engaging blog post about: "${topic}".
 
 Requirements:
 - Craft a creative, attention-grabbing title (NOT the topic verbatim, make it unique)
-- Write 800–1200 words of insightful, well-researched content
+- Write 400–600 words of insightful, well-researched content, engaging, and easy-to-read content
 - Include real-world implications, examples, or use-cases where relevant
+- The writing style should feel conversational and smooth, like reading a modern tech story or newsletter article — not an academic paper
+- Avoid overly technical jargon, complex explanations, or robotic AI-generated phrasing
 - Use proper semantic HTML: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <em>, <blockquote>
 - Write a compelling excerpt (max 160 characters) that hooks the reader
 - Suggest 3–5 relevant, specific tags (e.g. "LLM", "Computer Vision", not just "AI")
