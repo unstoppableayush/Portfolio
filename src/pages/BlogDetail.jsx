@@ -222,7 +222,7 @@ export default function BlogDetail() {
               {blog.readTime && <span>{blog.readTime} min read</span>}
             </div>
 
-            <h1 className="mt-4 text-4xl font-display text-white">
+            <h1 className="mt-4 text-2xl md:text-3xl font-display text-white">
               {blog.title}
             </h1>
             <div className="mt-4 flex flex-wrap items-start gap-6">

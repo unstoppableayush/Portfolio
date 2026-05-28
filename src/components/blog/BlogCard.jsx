@@ -45,7 +45,7 @@ export default function BlogCard({ blog, compact = false }) {
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-white">{blog.title}</h3>
+          <h3 className="text-lg md:text-xl font-semibold text-white">{blog.title}</h3>
           <p className="mt-2 text-sm leading-relaxed text-white/70">
             {blog.excerpt}
           </p>
